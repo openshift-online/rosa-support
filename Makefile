@@ -8,7 +8,7 @@ revision:=$(shell git rev-parse --short HEAD)
 build_time:=$(shell date +%D@%T)
 version_stamp:=$(revision)-$(build_time)
 # Set the linker flags so that the version will be included in the binaries:
-import_path:=github.com/openshift-online/ocm-support-cli
+import_path:=github.com/openshift-online/rosa-support
 ldflags:=-X $(import_path)/pkg/info.VersionStamp=$(version_stamp)
 
 .PHONY: build

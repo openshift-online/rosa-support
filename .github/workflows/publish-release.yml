@@ -63,8 +63,6 @@ jobs:
           
               # Copy the generated binary to the assets directory:
               binary = "rosa-support"
-              if goos == "windows":
-                  binary += ".exe"
               asset = os.path.join(assets, f"rosa-support-{goos}-{goarch}")
               os.rename(binary, asset)
           
@@ -74,7 +72,6 @@ jobs:
           build("linux", "arm64")
           build("linux", "ppc64le")
           build("linux", "s390x")
-          build("windows", "amd64")
           
           # Calculate the SHA256 digests:
           for asset in os.listdir(assets):
