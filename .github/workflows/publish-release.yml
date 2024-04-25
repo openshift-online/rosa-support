@@ -63,6 +63,7 @@ jobs:
           
               # Copy the generated binary to the assets directory:
               binary = "rosa-support"
+              asset = os.path.join(assets, f"rosa-support-{goos}-{goarch}")
               os.rename(binary, asset)
           
           # Build for the supported operating systems and architectures:
