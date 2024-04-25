@@ -24,5 +24,5 @@ func NewVersionCmd() *cobra.Command {
 }
 
 func run(cmd *cobra.Command, args []string) {
-	_, _ = fmt.Fprintf(os.Stdout, "%s (build %s)\n", version.Version, version.VersionStamp)
+	_, _ = fmt.Fprintf(os.Stdout, "%s\n", version.Version)
 }
