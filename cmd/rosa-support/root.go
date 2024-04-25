@@ -1,8 +1,10 @@
 package rosa_support
 
 import (
-	"github.com/openshift-online/rosa-support/cmd/rosa-support/version"
 	"os"
+
+	"github.com/openshift-online/rosa-support/cmd/rosa-support/create"
+	"github.com/openshift-online/rosa-support/cmd/rosa-support/version"
 
 	"github.com/spf13/cobra"
 )
@@ -39,4 +41,5 @@ func init() {
 	rootCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
 
 	rootCmd.AddCommand(version.NewVersionCmd())
+	rootCmd.AddCommand(create.Cmd)
 }
