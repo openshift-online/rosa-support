@@ -11,16 +11,26 @@ version_stamp:=$(revision)-$(build_time)
 import_path:=github.com/openshift-online/ocm-support-cli
 ldflags:=-X $(import_path)/pkg/info.VersionStamp=$(version_stamp)
 
+.PHONY: build
 build: clean
 	go build -o rosa-support -ldflags="$(ldflags)" . || exit 1
 
+.PHONY: install
 install: clean
 	go build -o $(GOPATH)/bin/rosa-support -ldflags="$(ldflags)" ./cmd/rosa-support || exit 1
 
+.PHONY: clean
 clean:
 	rm -f rosa-support
 
-cmds:
-	for cmd in $$(ls cmd); do \
-		go build -ldflags="$(ldflags)" "./cmd/$${cmd}" || exit 1; \
-	done
+.PHONY: test
+test:
+	go test ./...
+
+.PHONY: fmt
+fmt:
+	gofmt -s -l -w cmd pkg
+
+.PHONY: lint
+lint:
+	golangci-lint run --timeout 5m0s
