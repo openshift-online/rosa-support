@@ -58,14 +58,14 @@ jobs:
               env["GOARCH"] = goarch
           
               # Build the binary:
-              args = ["make", "cmds"]
+              args = ["make", "build"]
               subprocess.run(check=True, env=env, args=args)
           
               # Copy the generated binary to the assets directory:
-              binary = "ocm-support"
+              binary = "rosa-support"
               if goos == "windows":
                   binary += ".exe"
-              asset = os.path.join(assets, f"ocm-support-{goos}-{goarch}")
+              asset = os.path.join(assets, f"rosa-support-{goos}-{goarch}")
               os.rename(binary, asset)
           
           # Build for the supported operating systems and architectures:
