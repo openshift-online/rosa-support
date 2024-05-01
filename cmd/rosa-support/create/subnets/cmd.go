@@ -1,7 +1,6 @@
-package sg
+package subnets
 
 import (
-	"fmt"
 	"os"
 	"strings"
 
@@ -12,19 +11,18 @@ import (
 )
 
 var args struct {
-	region     string
-	count      int
-	vpcID      string
-	tags       string
-	namePrefix string
+	region            string
+	availabilityZones string
+	vpcID             string
+	tags              string
 }
 
 var Cmd = &cobra.Command{
-	Use:   "security-groups",
-	Short: "Create security-groups",
-	Long:  "Create security-groups.",
-	Example: `# Create a number of security groups"
-  rosa-helper create security-groups --name-prefix=mysg --region us-east-2 --vpc-id <vpc id>`,
+	Use:   "subnets",
+	Short: "Create subnets",
+	Long:  "Create subnets.",
+	Example: `  # Create a pair of subnets with prefix 'mysubnet-' in region 'us-east-2'
+  rosa-support create subnets --name-prefix=mysubnet --region us-east-2 --vpc-id <vpc id> --availability-zones <AZs>`,
 
 	Run: run,
 }
@@ -37,36 +35,33 @@ func init() {
 		"region",
 		"",
 		"",
-		"Region of the security groups",
+		"Vpc region",
 	)
+	err := Cmd.MarkFlagRequired("region")
+	if err != nil {
+		logger.LogError(err.Error())
+		os.Exit(1)
+	}
 	flags.StringVarP(
-		&args.namePrefix,
-		"name-prefix",
+		&args.availabilityZones,
+		"availability-zones",
 		"",
 		"",
-		"Name prefix of the security groups, they will be named with <prefix>-0,<prefix>-1",
+		"Availability zones to create subnets in",
 	)
-
-	flags.IntVarP(
-		&args.count,
-		"count",
-		"",
-		0,
-		"Additional number of security groups to be created for the vpc",
-	)
+	err = Cmd.MarkFlagRequired("availability-zones")
+	if err != nil {
+		logger.LogError(err.Error())
+		os.Exit(1)
+	}
 	flags.StringVarP(
 		&args.vpcID,
 		"vpc-id",
 		"",
 		"",
-		"Vpc ID for the VPC created for the additional security groups",
+		"ID of vpc to be created",
 	)
-	err := Cmd.MarkFlagRequired("vpc-id")
-	if err != nil {
-		logger.LogError(err.Error())
-		os.Exit(1)
-	}
-	err = Cmd.MarkFlagRequired("region")
+	err = Cmd.MarkFlagRequired("vpc-id")
 	if err != nil {
 		logger.LogError(err.Error())
 		os.Exit(1)
@@ -77,28 +72,15 @@ func run(cmd *cobra.Command, _ []string) {
 	if err != nil {
 		panic(err)
 	}
-	preparedSGs := []string{}
-	sgDescription := "This security group is created for OCM testing"
-	protocol := "tcp"
-	for i := 0; i < args.count; i++ {
-		sgName := fmt.Sprintf("%s-%d", args.namePrefix, i)
-		sg, err := vpc.AWSClient.CreateSecurityGroup(vpc.VpcID, sgName, sgDescription)
+	availabilityZones := strings.Split(args.availabilityZones, ",")
+	for _, availabilityZone := range availabilityZones {
+		subnetMap, err := vpc.PreparePairSubnetByZone(availabilityZone)
 		if err != nil {
 			panic(err)
 		}
-		groupID := *sg.GroupId
-		cidrPortsMap := map[string]int32{
-			vpc.CIDRValue: 8080,
-			"0.0.0.0/0":   22,
+		for subnetType, subnet := range subnetMap {
+			logger.LogInfo("AVAILABILITY ZONE %s %s SUBNET: %s", availabilityZone, strings.ToUpper(subnetType),
+				subnet.ID)
 		}
-		for cidr, port := range cidrPortsMap {
-			_, err = vpc.AWSClient.AuthorizeSecurityGroupIngress(groupID, cidr, protocol, port, port)
-			if err != nil {
-				panic(err)
-			}
-		}
-
-		preparedSGs = append(preparedSGs, groupID)
 	}
-	logger.LogInfo("ADDITIONAL SECURITY GROUPS: %s", strings.Join(preparedSGs, ","))
 }
