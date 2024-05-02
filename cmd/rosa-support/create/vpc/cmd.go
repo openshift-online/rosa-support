@@ -22,7 +22,7 @@ var Cmd = &cobra.Command{
 	Short: "Create vpc",
 	Long:  "Create vpc.",
 	Example: `  # Create a vpc named "myvpc"
-  rosa-helper create vpc --name=myvpc --region us-east-2`,
+  rosa-support create vpc --name=myvpc --region us-east-2`,
 
 	Run: run,
 }

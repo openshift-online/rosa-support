@@ -24,7 +24,7 @@ var Cmd = &cobra.Command{
 	Short: "Create security-groups",
 	Long:  "Create security-groups.",
 	Example: `# Create a number of security groups"
-  rosa-helper create security-groups --name-prefix=mysg --region us-east-2 --vpc-id <vpc id>`,
+  rosa-support create security-groups --name-prefix=mysg --region us-east-2 --vpc-id <vpc id>`,
 
 	Run: run,
 }

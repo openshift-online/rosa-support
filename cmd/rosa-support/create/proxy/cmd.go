@@ -11,13 +11,13 @@ import (
 )
 
 var args struct {
-	region         string
-	vpcID          string
-	zone           string
-	imageID        string
-	privateKeyPath string
-	keyPairName    string
-	caFilePath     string
+	region           string
+	vpcID            string
+	availabilityZone string
+	imageID          string
+	privateKeyPath   string
+	keyPairName      string
+	caFilePath       string
 }
 
 var Cmd = &cobra.Command{
@@ -25,7 +25,7 @@ var Cmd = &cobra.Command{
 	Short: "Create proxy",
 	Long:  "Create proxy.",
 	Example: `  # Create a proxy
-  rosa-helper create proxy --region us-east-2 --vpc-id <vpc id>`,
+  rosa-support create proxy --region us-east-2 --vpc-id <vpc id> --availability-zone <AZ> --ca-file <filepath> --keypair-name <name>`,
 	Run: run,
 }
 
@@ -37,21 +37,21 @@ func init() {
 		"region",
 		"",
 		"",
-		"Vpc region",
+		"Vpc region (required)",
 	)
 	flags.StringVarP(
 		&args.vpcID,
 		"vpc-id",
 		"",
 		"",
-		"Creates a pair of subnets",
+		"Creates a pair of subnets (required)",
 	)
 	flags.StringVarP(
-		&args.zone,
-		"zone",
+		&args.availabilityZone,
+		"availability-zone",
 		"",
 		"",
-		"Creates a proxy in the indicated zone",
+		"Creates a proxy in the indicated AZ (required)",
 	)
 	flags.StringVarP(
 		&args.imageID,
@@ -66,7 +66,7 @@ func init() {
 		"ca-file",
 		"",
 		"",
-		"Creates a proxy and stores the ca file",
+		"Creates a proxy and stores the ca file (required)",
 	)
 
 	flags.StringVarP(
@@ -74,7 +74,7 @@ func init() {
 		"keypair-name",
 		"",
 		"",
-		"Stores key pair in the given path",
+		"Stores key pair in the given path (required)",
 	)
 
 	err := Cmd.MarkFlagRequired("vpc-id")
@@ -87,7 +87,7 @@ func init() {
 		logger.LogError(err.Error())
 		os.Exit(1)
 	}
-	err = Cmd.MarkFlagRequired("zone")
+	err = Cmd.MarkFlagRequired("availability-zone")
 	if err != nil {
 		logger.LogError(err.Error())
 		os.Exit(1)
@@ -109,7 +109,7 @@ func run(cmd *cobra.Command, _ []string) {
 	if err != nil {
 		panic(err)
 	}
-	_, ip, ca, err := vpc.LaunchProxyInstance(args.imageID, args.zone, args.keyPairName)
+	_, ip, ca, err := vpc.LaunchProxyInstance(args.imageID, args.availabilityZone, args.keyPairName)
 	if err != nil {
 		panic(err)
 	}
