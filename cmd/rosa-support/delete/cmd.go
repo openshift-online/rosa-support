@@ -14,32 +14,22 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-package version
+package delete
 
 import (
-	"fmt"
-	"os"
-
-	"github.com/openshift-online/rosa-support/pkg/version"
+	"github.com/openshift-online/rosa-support/cmd/rosa-support/delete/tag"
+	"github.com/openshift-online/rosa-support/cmd/rosa-support/delete/vpc"
 	"github.com/spf13/cobra"
 )
 
-const (
-	use   = "version"
-	short = "Prints the version of the tool"
-	long  = "Prints the version number of the tool"
-)
-
-func NewVersionCmd() *cobra.Command {
-	return &cobra.Command{
-		Use:   use,
-		Short: short,
-		Long:  long,
-		Args:  cobra.NoArgs,
-		Run:   run,
-	}
+var Cmd = &cobra.Command{
+	Use:     "delete",
+	Aliases: []string{"del"},
+	Short:   "Delete a resource from stdin",
+	Long:    "Delete a resource from stdin",
 }
 
-func run(cmd *cobra.Command, args []string) {
-	_, _ = fmt.Fprintf(os.Stdout, "%s\n", version.Version)
+func init() {
+	Cmd.AddCommand(vpc.Cmd)
+	Cmd.AddCommand(tag.Cmd)
 }
