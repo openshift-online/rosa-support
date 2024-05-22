@@ -16,7 +16,7 @@ var args struct {
 	availabilityZone string
 	imageID          string
 	privateKeyPath   string
-	keyPairName      string
+	keyPairFilePath  string
 	caFilePath       string
 }
 
@@ -25,7 +25,7 @@ var Cmd = &cobra.Command{
 	Short: "Create proxy",
 	Long:  "Create proxy.",
 	Example: `  # Create a proxy
-  rosa-support create proxy --region us-east-2 --vpc-id <vpc id> --availability-zone <AZ> --ca-file <filepath> --keypair-name <name>`,
+  rosa-support create proxy --region us-east-2 --vpc-id <vpc id> --availability-zone <AZ> --ca-file <filepath> --keypair-filepath <path/filename>`,
 	Run: run,
 }
 
@@ -70,11 +70,11 @@ func init() {
 	)
 
 	flags.StringVarP(
-		&args.keyPairName,
-		"keypair-name",
+		&args.keyPairFilePath,
+		"keypair-filepath",
 		"",
 		"",
-		"Stores key pair in the given path (required)",
+		"Exact filepath/filename of the keypair. Example: 'my-keys.pem' or '../foo/bar/my-keys.pem' (required)",
 	)
 
 	err := Cmd.MarkFlagRequired("vpc-id")
@@ -97,7 +97,7 @@ func init() {
 		logger.LogError(err.Error())
 		os.Exit(1)
 	}
-	err = Cmd.MarkFlagRequired("keypair-name")
+	err = Cmd.MarkFlagRequired("keypair-filepath")
 	if err != nil {
 		logger.LogError(err.Error())
 		os.Exit(1)
@@ -109,7 +109,7 @@ func run(cmd *cobra.Command, _ []string) {
 	if err != nil {
 		panic(err)
 	}
-	_, ip, ca, err := vpc.LaunchProxyInstance(args.imageID, args.availabilityZone, args.keyPairName)
+	_, ip, ca, err := vpc.LaunchProxyInstance(args.imageID, args.availabilityZone, args.keyPairFilePath)
 	if err != nil {
 		panic(err)
 	}

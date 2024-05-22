@@ -51,7 +51,7 @@ func init() {
 		&args.count,
 		"count",
 		"",
-		0,
+		1,
 		"Additional number of security groups to be created for the vpc",
 	)
 	flags.StringVarP(
