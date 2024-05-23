@@ -20,7 +20,7 @@ var Cmd = &cobra.Command{
 	Short: "Delete tag",
 	Long:  "Delete tag.",
 	Example: `  # Delete a tag from the resource
-  rosa-support delete tag --resource-id <vpc id> --region us-east-2 --tag-key key`,
+  rosa-support delete tag --resource-id <resource id> --region us-east-2 --tag-key key`,
 
 	Run: run,
 }

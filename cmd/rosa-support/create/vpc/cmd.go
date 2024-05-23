@@ -84,7 +84,7 @@ func run(cmd *cobra.Command, _ []string) {
 			split := strings.Split(tag, ":")
 
 			if len(split) == 2 {
-				tagMap[split[0]] = tagMap[split[1]]
+				tagMap[split[0]] = split[1]
 			} else {
 				tagMap[split[0]] = ""
 			}

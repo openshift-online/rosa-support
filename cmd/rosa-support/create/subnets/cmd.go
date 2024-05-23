@@ -22,7 +22,7 @@ var Cmd = &cobra.Command{
 	Short: "Create subnets",
 	Long:  "Create subnets.",
 	Example: `  # Create a pair of subnets with prefix 'mysubnet-' in region 'us-east-2'
-  rosa-support create subnets --name-prefix=mysubnet --region us-east-2 --vpc-id <vpc id> --availability-zones <AZs>`,
+  rosa-support create subnets --region us-east-2 --vpc-id <vpc id> --availability-zones <AZs>`,
 
 	Run: run,
 }
