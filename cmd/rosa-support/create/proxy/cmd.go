@@ -14,9 +14,8 @@ var args struct {
 	region           string
 	vpcID            string
 	availabilityZone string
-	imageID          string
 	privateKeyPath   string
-	keyPairFilePath  string
+	keyPairName      string
 	caFilePath       string
 }
 
@@ -25,7 +24,7 @@ var Cmd = &cobra.Command{
 	Short: "Create proxy",
 	Long:  "Create proxy.",
 	Example: `  # Create a proxy
-  rosa-support create proxy --region us-east-2 --vpc-id <vpc id> --availability-zone <AZ> --ca-file <filepath> --keypair-filepath <path/filename>`,
+  rosa-support create proxy --region us-east-2 --vpc-id <vpc id> --availability-zone <AZ> --ca-file <path> --keypair-name <name> --private-key-path <path>`,
 	Run: run,
 }
 
@@ -53,13 +52,6 @@ func init() {
 		"",
 		"Creates a proxy in the indicated AZ (required)",
 	)
-	flags.StringVarP(
-		&args.imageID,
-		"image-id",
-		"",
-		"",
-		"Creates a proxy with the image ID given",
-	)
 
 	flags.StringVarP(
 		&args.caFilePath,
@@ -70,11 +62,18 @@ func init() {
 	)
 
 	flags.StringVarP(
-		&args.keyPairFilePath,
-		"keypair-filepath",
+		&args.keyPairName,
+		"keypair-name",
 		"",
 		"",
-		"Exact filepath/filename of the keypair. Example: 'my-keys.pem' or '../foo/bar/my-keys.pem' (required)",
+		"Create a key pair with the name (required)",
+	)
+	flags.StringVarP(
+		&args.privateKeyPath,
+		"private-key-path",
+		"",
+		"",
+		"Stores key pair in the given path (required)",
 	)
 
 	err := Cmd.MarkFlagRequired("vpc-id")
@@ -97,7 +96,13 @@ func init() {
 		logger.LogError(err.Error())
 		os.Exit(1)
 	}
-	err = Cmd.MarkFlagRequired("keypair-filepath")
+	err = Cmd.MarkFlagRequired("keypair-name")
+	if err != nil {
+		logger.LogError(err.Error())
+		os.Exit(1)
+	}
+
+	err = Cmd.MarkFlagRequired("private-key-path")
 	if err != nil {
 		logger.LogError(err.Error())
 		os.Exit(1)
@@ -109,7 +114,7 @@ func run(cmd *cobra.Command, _ []string) {
 	if err != nil {
 		panic(err)
 	}
-	_, ip, ca, err := vpc.LaunchProxyInstance(args.imageID, args.availabilityZone, args.keyPairFilePath)
+	_, ip, ca, err := vpc.LaunchProxyInstance(args.availabilityZone, args.keyPairName, args.privateKeyPath)
 	if err != nil {
 		panic(err)
 	}
