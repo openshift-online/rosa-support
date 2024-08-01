@@ -21,6 +21,7 @@ import (
 
 	"github.com/openshift-online/rosa-support/cmd/rosa-support/create"
 	"github.com/openshift-online/rosa-support/cmd/rosa-support/delete"
+	"github.com/openshift-online/rosa-support/cmd/rosa-support/tag"
 	"github.com/openshift-online/rosa-support/cmd/rosa-support/version"
 
 	"github.com/spf13/cobra"
@@ -60,4 +61,5 @@ func init() {
 	rootCmd.AddCommand(version.NewVersionCmd())
 	rootCmd.AddCommand(create.Cmd)
 	rootCmd.AddCommand(delete.Cmd)
+	rootCmd.AddCommand(tag.Cmd)
 }

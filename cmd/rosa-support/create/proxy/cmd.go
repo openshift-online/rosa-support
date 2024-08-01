@@ -43,7 +43,7 @@ func init() {
 		"vpc-id",
 		"",
 		"",
-		"Creates a pair of subnets (required)",
+		"vpc id is needed for instance launch",
 	)
 	flags.StringVarP(
 		&args.availabilityZone,
@@ -58,7 +58,7 @@ func init() {
 		"ca-file",
 		"",
 		"",
-		"Creates a proxy and stores the ca file (required)",
+		"Creates a proxy and stores the ca file (required) to the indicated file name",
 	)
 
 	flags.StringVarP(
@@ -66,14 +66,14 @@ func init() {
 		"keypair-name",
 		"",
 		"",
-		"Create a key pair with the name (required)",
+		"key pair will be created with the name (required)",
 	)
 	flags.StringVarP(
 		&args.privateKeyPath,
 		"private-key-path",
 		"",
 		"",
-		"Stores key pair in the given path (required)",
+		"record generated private ssh key in the given path (required)",
 	)
 
 	err := Cmd.MarkFlagRequired("vpc-id")

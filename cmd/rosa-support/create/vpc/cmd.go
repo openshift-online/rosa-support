@@ -67,7 +67,7 @@ func init() {
 	)
 }
 func run(cmd *cobra.Command, _ []string) {
-	vpc, err := vpcClient.PrepareVPC(args.name, args.region, args.cidr, args.findExisting)
+	vpc, err := vpcClient.PrepareVPC(args.name, args.region, args.cidr, args.findExisting, "")
 	if err != nil {
 		logger.LogError(err.Error())
 		os.Exit(1)

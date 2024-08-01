@@ -17,7 +17,7 @@ build: clean
 
 .PHONY: install
 install: clean
-	go build -o $(GOPATH)/bin/rosa-support -ldflags="$(ldflags)" ./cmd/rosa-support || exit 1
+	go build -o $(GOPATH)/bin/rosa-support -ldflags="$(ldflags)" . || exit 1
 
 .PHONY: clean
 clean:
