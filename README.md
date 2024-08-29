@@ -50,7 +50,7 @@ git push origin v0.0.1
 
 * Prepare a pair of subnets on the indicated zone of the region.
 	* NOTE: If the subnets had been existing, it will reuse the exsiting subnets in the zone
-	`$ ./rosa-support create subnets --region us-west-2 --availability-zones us-west-2a --vpc-id <vpc id>`
+	`$ rosa-support create subnets --region us-west-2 --availability-zones us-west-2a --vpc-id <vpc id>`
 
 * Prepare proxy server
 	* *--region* is required where created the vpc-id
