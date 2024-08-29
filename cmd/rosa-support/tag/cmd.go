@@ -19,7 +19,7 @@ var Cmd = &cobra.Command{
 	Short: "tag a resource",
 	Long:  "Tag a resource with the resource ID",
 	Example: `  #Tag a vpc with vpc ID
-  ocmqe tag --resource-id <vpc id> --tags tag1:tagv,tag2:tagv2`,
+  rosa-support tag --resource-id <vpc id> --tags tag1:tagv,tag2:tagv2 --region <region>`,
 
 	Run: run,
 }
@@ -32,26 +32,26 @@ func init() {
 		"resource-id",
 		"",
 		"",
-		"resource ID",
+		"resource ID tried to tag",
 	)
 	flags.StringVarP(
 		&args.region,
 		"region",
 		"",
 		"",
-		"region ID",
+		"region ID where the resource located",
 	)
 	flags.StringVarP(
 		&args.tags,
 		"tags",
 		"",
 		"",
-		"key of the tag",
+		"tags going to be used to tag resource. The fommat should follow --tags tag1:tagv,tag2:tagv2",
 	)
 
 	requiredFlags := []string{
 		"resource-id",
-		"key",
+		"tags",
 		"region",
 	}
 	for _, requiredFlag := range requiredFlags {
