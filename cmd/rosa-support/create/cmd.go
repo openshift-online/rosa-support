@@ -17,6 +17,7 @@ limitations under the License.
 package create
 
 import (
+	"github.com/openshift-online/rosa-support/cmd/rosa-support/create/bastion"
 	"github.com/openshift-online/rosa-support/cmd/rosa-support/create/proxy"
 	"github.com/openshift-online/rosa-support/cmd/rosa-support/create/sg"
 	subnets "github.com/openshift-online/rosa-support/cmd/rosa-support/create/subnets"
@@ -36,4 +37,5 @@ func init() {
 	Cmd.AddCommand(sg.Cmd)
 	Cmd.AddCommand(subnets.Cmd)
 	Cmd.AddCommand(proxy.Cmd)
+	Cmd.AddCommand(bastion.Cmd)
 }
