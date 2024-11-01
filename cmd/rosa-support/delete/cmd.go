@@ -17,6 +17,7 @@ limitations under the License.
 package delete
 
 import (
+	"github.com/openshift-online/rosa-support/cmd/rosa-support/delete/bastion_proxy"
 	"github.com/openshift-online/rosa-support/cmd/rosa-support/delete/tag"
 	"github.com/openshift-online/rosa-support/cmd/rosa-support/delete/vpc"
 	"github.com/spf13/cobra"
@@ -32,4 +33,5 @@ var Cmd = &cobra.Command{
 func init() {
 	Cmd.AddCommand(vpc.Cmd)
 	Cmd.AddCommand(tag.Cmd)
+	Cmd.AddCommand(bastion_proxy.Cmd)
 }
