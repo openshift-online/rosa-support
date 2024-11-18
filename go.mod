@@ -3,7 +3,7 @@ module github.com/openshift-online/rosa-support
 go 1.21
 
 require (
-	github.com/openshift-online/ocm-common v0.0.12
+	github.com/openshift-online/ocm-common v0.0.13
 	github.com/spf13/cobra v1.8.0
 )
 
