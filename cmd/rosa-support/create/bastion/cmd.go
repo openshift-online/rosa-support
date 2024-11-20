@@ -12,6 +12,8 @@ var args struct {
 	region           string
 	vpcID            string
 	availabilityZone string
+	privateKeyPath   string
+	keyPairName      string
 	cidr             string
 }
 
@@ -20,7 +22,7 @@ var Cmd = &cobra.Command{
 	Short: "Create bastion proxy",
 	Long:  "Create bastion proxy.",
 	Example: `  # Create a bastion proxy in region 'us-east-2'
-  rosa-support create bastion --region us-east-2 --availability-zone us-east-2a --vpc-id <vpc id>`,
+  rosa-support create bastion --region us-east-2 --availability-zone us-east-2a --vpc-id <vpc id> --keypair-name <name> --private-key-path <path>`,
 
 	Run: run,
 }
@@ -37,7 +39,7 @@ func init() {
 	)
 	err := Cmd.MarkFlagRequired("region")
 	if err != nil {
-		logger.LogError(err.Error())
+		logger.LogError("%s", err.Error())
 		os.Exit(1)
 	}
 	flags.StringVarP(
@@ -49,7 +51,7 @@ func init() {
 	)
 	err = Cmd.MarkFlagRequired("vpc-id")
 	if err != nil {
-		logger.LogError(err.Error())
+		logger.LogError("%s", err.Error())
 		os.Exit(1)
 	}
 	flags.StringVarP(
@@ -61,7 +63,31 @@ func init() {
 	)
 	err = Cmd.MarkFlagRequired("availability-zone")
 	if err != nil {
-		logger.LogError(err.Error())
+		logger.LogError("%s", err.Error())
+		os.Exit(1)
+	}
+	flags.StringVarP(
+		&args.keyPairName,
+		"keypair-name",
+		"",
+		"",
+		"key pair will be created with the name (required)",
+	)
+	err = Cmd.MarkFlagRequired("keypair-name")
+	if err != nil {
+		logger.LogError("%s", err.Error())
+		os.Exit(1)
+	}
+	flags.StringVarP(
+		&args.privateKeyPath,
+		"private-key-path",
+		"",
+		"",
+		"record generated private ssh key in the given path (required)",
+	)
+	err = Cmd.MarkFlagRequired("private-key-path")
+	if err != nil {
+		logger.LogError("%s", err.Error())
 		os.Exit(1)
 	}
 	flags.StringVarP(
@@ -79,7 +105,7 @@ func run(cmd *cobra.Command, _ []string) {
 	if err != nil {
 		panic(err)
 	}
-	instance, err := vpc.PrepareBastionProxy(args.availabilityZone, args.cidr)
+	instance, err := vpc.PrepareBastionProxy(args.availabilityZone, args.cidr, args.keyPairName, args.privateKeyPath)
 	if err != nil {
 		panic(err)
 	}

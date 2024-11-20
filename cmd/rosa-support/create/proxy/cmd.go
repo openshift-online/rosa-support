@@ -78,33 +78,33 @@ func init() {
 
 	err := Cmd.MarkFlagRequired("vpc-id")
 	if err != nil {
-		logger.LogError(err.Error())
+		logger.LogError("%s", err.Error())
 		os.Exit(1)
 	}
 	err = Cmd.MarkFlagRequired("region")
 	if err != nil {
-		logger.LogError(err.Error())
+		logger.LogError("%s", err.Error())
 		os.Exit(1)
 	}
 	err = Cmd.MarkFlagRequired("availability-zone")
 	if err != nil {
-		logger.LogError(err.Error())
+		logger.LogError("%s", err.Error())
 		os.Exit(1)
 	}
 	err = Cmd.MarkFlagRequired("ca-file")
 	if err != nil {
-		logger.LogError(err.Error())
+		logger.LogError("%s", err.Error())
 		os.Exit(1)
 	}
 	err = Cmd.MarkFlagRequired("keypair-name")
 	if err != nil {
-		logger.LogError(err.Error())
+		logger.LogError("%s", err.Error())
 		os.Exit(1)
 	}
 
 	err = Cmd.MarkFlagRequired("private-key-path")
 	if err != nil {
-		logger.LogError(err.Error())
+		logger.LogError("%s", err.Error())
 		os.Exit(1)
 	}
 }

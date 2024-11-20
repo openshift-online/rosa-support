@@ -80,12 +80,12 @@ func init() {
 func run(_ *cobra.Command, _ []string) {
 	client, err := awsClient.CreateAWSClient(args.profileName, args.region)
 	if err != nil {
-		logger.LogError(err.Error())
+		logger.LogError("%s", err.Error())
 		os.Exit(1)
 	}
 	_, err = client.RemoveResourceTag(args.resourceID, args.tagKey, args.tagValue)
 	if err != nil {
-		logger.LogError(err.Error())
+		logger.LogError("%s", err.Error())
 		os.Exit(1)
 	}
 }

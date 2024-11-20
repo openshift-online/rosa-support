@@ -60,12 +60,12 @@ func init() {
 func run(cmd *cobra.Command, _ []string) {
 	vpc, err := vpcClient.GenerateVPCByID(args.vpcID, args.region)
 	if err != nil {
-		logger.LogError(err.Error())
+		logger.LogError("%s", err.Error())
 		os.Exit(1)
 	}
 	err = vpc.DeleteVPCChain(args.totalClean)
 	if err != nil {
-		logger.LogError(err.Error())
+		logger.LogError("%s", err.Error())
 		os.Exit(1)
 	}
 }
