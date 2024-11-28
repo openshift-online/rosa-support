@@ -39,7 +39,7 @@ func init() {
 	)
 	err := Cmd.MarkFlagRequired("region")
 	if err != nil {
-		logger.LogError(err.Error())
+		logger.LogError("%s", err.Error())
 		os.Exit(1)
 	}
 	flags.StringVarP(
@@ -51,7 +51,7 @@ func init() {
 	)
 	err = Cmd.MarkFlagRequired("availability-zones")
 	if err != nil {
-		logger.LogError(err.Error())
+		logger.LogError("%s", err.Error())
 		os.Exit(1)
 	}
 	flags.StringVarP(
@@ -63,7 +63,7 @@ func init() {
 	)
 	err = Cmd.MarkFlagRequired("vpc-id")
 	if err != nil {
-		logger.LogError(err.Error())
+		logger.LogError("%s", err.Error())
 		os.Exit(1)
 	}
 }

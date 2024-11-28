@@ -63,12 +63,12 @@ func init() {
 	)
 	err := Cmd.MarkFlagRequired("vpc-id")
 	if err != nil {
-		logger.LogError(err.Error())
+		logger.LogError("%s", err.Error())
 		os.Exit(1)
 	}
 	err = Cmd.MarkFlagRequired("region")
 	if err != nil {
-		logger.LogError(err.Error())
+		logger.LogError("%s", err.Error())
 		os.Exit(1)
 	}
 }

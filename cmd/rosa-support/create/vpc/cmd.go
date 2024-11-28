@@ -69,7 +69,7 @@ func init() {
 func run(cmd *cobra.Command, _ []string) {
 	vpc, err := vpcClient.PrepareVPC(args.name, args.region, args.cidr, args.findExisting, "")
 	if err != nil {
-		logger.LogError(err.Error())
+		logger.LogError("%s", err.Error())
 		os.Exit(1)
 	}
 
@@ -92,7 +92,7 @@ func run(cmd *cobra.Command, _ []string) {
 		}
 		_, err = vpc.AWSClient.TagResource(vpc.VpcID, tagMap)
 		if err != nil {
-			logger.LogError(err.Error())
+			logger.LogError("%s", err.Error())
 			os.Exit(1)
 		}
 	}

@@ -33,4 +33,4 @@ fmt:
 
 .PHONY: lint
 lint:
-	golangci-lint run --timeout 5m0s
+	golangci-lint run --timeout 10m0s

@@ -57,7 +57,7 @@ func init() {
 	for _, requiredFlag := range requiredFlags {
 		err := Cmd.MarkFlagRequired(requiredFlag)
 		if err != nil {
-			logger.LogError(err.Error())
+			logger.LogError("%s", err.Error())
 			os.Exit(1)
 		}
 	}
