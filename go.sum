@@ -56,8 +56,8 @@ github.com/jmespath/go-jmespath v0.4.0 h1:BEgLn5cpjn8UN1mAw4NjwDrS35OdebyEtFe+9Y
 github.com/jmespath/go-jmespath v0.4.0/go.mod h1:T8mJZnbsbmF+m6zOOFylbeCJqk5+pHWvzYPziyZiYoo=
 github.com/jmespath/go-jmespath/internal/testify v1.5.1 h1:shLQSRRSCCPj3f2gpwzGwWFoC7ycTf1rcQZHOlsJ6N8=
 github.com/jmespath/go-jmespath/internal/testify v1.5.1/go.mod h1:L3OGu8Wl2/fWfCI6z80xFu9LTZmf1ZRjMHUOPmWr69U=
-github.com/openshift-online/ocm-common v0.0.14-0.20241121072829-c1150dfc4289 h1:CYX7p1cLo4+BwjHlJXHDP/zPiNit32b6YO6R0lGW+ZQ=
-github.com/openshift-online/ocm-common v0.0.14-0.20241121072829-c1150dfc4289/go.mod h1:6MWje2NFNJ3IWpGs7BYj6DWagWXHyp8EnmYY7XFTtI4=
+github.com/openshift-online/ocm-common v0.0.14 h1:i9APadBpDMiGkrKIf/yodVAHVpczZkKUOLoKT/bFLBk=
+github.com/openshift-online/ocm-common v0.0.14/go.mod h1:VEkuZp9aqbXtetZ5ycND6QpvhykvTuBF3oPsVM1X3vI=
 github.com/pmezard/go-difflib v1.0.0 h1:4DBwDE0NGyQoBHbLQYPwSUPoCMWR5BEzIk/f1lZbAQM=
 github.com/pmezard/go-difflib v1.0.0/go.mod h1:iKH77koFhYxTK1pcRnkKkqfTogsbg7gZNVY4sRDYZ/4=
 github.com/russross/blackfriday/v2 v2.1.0/go.mod h1:+Rmxgy9KzJVeS9/2gXHxylqXiyQDYRxCVz55jmeOWTM=
