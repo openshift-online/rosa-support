@@ -84,7 +84,6 @@ git push origin v0.0.1
 	* *--vpc-id* is required which should be VPC id used to launch cluster
 	* *--keypair-name* is required to generate temporary used to launch the proxy instance
 	* *--private-key-path* is required to record the generated private ssh key
-	* *--cidr-block* is NOT required, only IP address within CIDR block can access other resources through bastion proxy(default is 0.0.0.0/0)
 
   `$ rosa-support create bastion --region us-east-2 --availability-zone us-east-2a --vpc-id <vpc id> --keypair-name <name> --private-key-path <path>`
 

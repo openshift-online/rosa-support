@@ -1,7 +1,6 @@
 package bastion
 
 import (
-	"fmt"
 	logger "github.com/openshift-online/ocm-common/pkg/log"
 	vpcClient "github.com/openshift-online/ocm-common/pkg/test/vpc_client"
 	"github.com/spf13/cobra"
@@ -14,7 +13,6 @@ var args struct {
 	availabilityZone string
 	privateKeyPath   string
 	keyPairName      string
-	cidr             string
 }
 
 var Cmd = &cobra.Command{
@@ -90,14 +88,6 @@ func init() {
 		logger.LogError("%s", err.Error())
 		os.Exit(1)
 	}
-	flags.StringVarP(
-		&args.cidr,
-		"cidr-block",
-		"",
-		"",
-		"Only IP address within CIDR block can access other resources through bastion "+
-			"proxy(not required, default is 0.0.0.0/0)",
-	)
 }
 
 func run(cmd *cobra.Command, _ []string) {
@@ -105,17 +95,10 @@ func run(cmd *cobra.Command, _ []string) {
 	if err != nil {
 		panic(err)
 	}
-	instance, err := vpc.PrepareBastionProxy(args.availabilityZone, args.cidr, args.keyPairName, args.privateKeyPath)
+	proxyUrl, err := vpc.PrepareBastionProxy(args.availabilityZone, args.keyPairName, args.privateKeyPath)
 	if err != nil {
 		panic(err)
 	}
 
-	inst := *instance
-	publicIp := *inst.PublicIpAddress
-	httpProxy := fmt.Sprintf("http://%s:3128", publicIp)
-	httpsProxy := fmt.Sprintf("https://%s:3128", publicIp)
-	logger.LogInfo("Bastion instance ID: %s", *inst.InstanceId)
-	logger.LogInfo("Bastion HTTP PROXY: %s", httpProxy)
-	logger.LogInfo("Bastion HTTPs PROXY: %s", httpsProxy)
-
+	logger.LogInfo("Bastion PROXY URL: %s", proxyUrl)
 }
